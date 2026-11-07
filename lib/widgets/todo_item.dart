@@ -22,9 +22,7 @@ class ToDoItem extends StatelessWidget {
         onTap: () {
           onToDoChanged(todo);
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         tileColor: Colors.white,
         leading: Icon(
