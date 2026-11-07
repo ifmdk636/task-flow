@@ -24,15 +24,20 @@ RUN flutter build web --release
 FROM nginx:alpine
 
 # Konfigurasi Nginx untuk SPA (Single Page Application)
-# agar navigasi dan refresh halaman tidak menghasilkan error 404
+# Mendukung IPv4 dan IPv6, serta fallback ke index.html
 RUN printf 'server {\n\
     listen 80;\n\
+    listen [::]:80;\n\
+    server_name localhost;\n\
+    root /usr/share/nginx/html;\n\
+    index index.html index.htm;\n\
     location / {\n\
-        root /usr/share/nginx/html;\n\
-        index index.html index.htm;\n\
         try_files $uri $uri/ /index.html;\n\
     }\n\
 }\n' > /etc/nginx/conf.d/default.conf
+
+# Bersihkan direktori default Nginx
+RUN rm -rf /usr/share/nginx/html/*
 
 # Salin hasil build web dari Stage 1 ke folder publik Nginx
 COPY --from=build /app/build/web /usr/share/nginx/html
