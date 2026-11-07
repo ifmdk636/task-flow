@@ -1,0 +1,17 @@
+.dart_tool/
+.git/
+.github/
+.idea/
+.vscode/
+build/
+android/
+ios/
+linux/
+macos/
+windows/
+*.iml
+.metadata
+Dockerfile
+.dockerignore
+pubspec.lock
+README.md
