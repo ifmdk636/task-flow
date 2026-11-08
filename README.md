@@ -45,7 +45,14 @@ Pilih salah satu metode yang ingin kamu gunakan:
 
 ## 💻 1. Cara Menjalankan Secara Lokal (Tanpa Docker)
 
-1. **Unduh dependensi**:
+1. **Clone / Import Repository dari GitHub**:
+   Buka terminal di komputer kamu, lalu unduh proyek ini menggunakan Git:
+   ```bash
+   git clone https://github.com/ifmdk636/task-flow.git
+   cd task-flow
+   ```
+
+2. **Unduh dependensi**:
    ```bash
    flutter pub get
    ```
