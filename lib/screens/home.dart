@@ -13,6 +13,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final _todosList = ToDo.todoList();
   final TextEditingController _todoController = TextEditingController();
+  List<ToDo> _foundToDo = [];
+  
+  @override
+  void initState() {
+    _foundToDo = _todosList;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -48,7 +55,7 @@ class _HomeState extends State<Home> {
                   child: ListView(
                     padding: const EdgeInsets.only(bottom: 90),
                     children: [
-                      for (ToDo todo in _todosList)
+                      for (ToDo todo in _foundToDo.reversed)
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: _handleToDoChange,
@@ -155,6 +162,22 @@ class _HomeState extends State<Home> {
     FocusScope.of(context).unfocus();
   }
 
+  void _runFilter(String enteredKeyword){
+    List<ToDo> results = [];
+    if (enteredKeyword.isEmpty){
+      results = _todosList;
+    } else {
+      results = _todosList
+      .where((item)=>item.todoText!
+        .toLowerCase()
+        .contains(enteredKeyword.toLowerCase()))
+      .toList();
+    }
+    setState(() {
+      _foundToDo = results;
+    });
+  }
+
   Widget _searchBox() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -162,7 +185,8 @@ class _HomeState extends State<Home> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: const TextField(
+      child: TextField(
+        onChanged: (value) => _runFilter(value),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(Icons.search, color: tdBlack, size: 20),
